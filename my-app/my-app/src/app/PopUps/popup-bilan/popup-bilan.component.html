@@ -1,0 +1,35 @@
+<!-- popup-dialog.component.html -->
+
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
+    <div class="popupContainer">
+      <!-- Your popup content here -->
+     
+      
+          <h1 class="popupH1">Imprimer un bilan</h1>
+          <hr class="popupHr">
+          <form class="popupForm" action="">
+            <div class="popupDiv">
+              <p class="popupP">Taxe</p>
+              <select class="popupInput" name="" id="" [(ngModel)]="selectedType">
+                  <option value="Redevance">Redevance</option>
+                  <option value="TRP">TRP</option>
+              </select>
+            </div>
+            <div class="popupDiv">
+            <p class="popupP">Periode en cours</p>
+            <input class="popupInput" type="date" name="" id="" [(ngModel)]="selectedDate" />
+          </div>
+          <div class="popupButtonContainer">
+              <button class="popupButtonAnnuler" (click)="closeBilanPopup()">Annuler</button>
+              <button class="popupButton" (click)="imprimerBilan()">Imprimer un bilan</button>
+
+
+          </div>
+            
+          </form>
+      
+       
+        
+    </div>
+  </div>
+  

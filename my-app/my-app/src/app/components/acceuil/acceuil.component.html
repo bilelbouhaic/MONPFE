@@ -1,0 +1,16 @@
+<app-myheader [pageTitle]="'Analyse production'"></app-myheader>
+
+<!-- app.component.html -->
+<div class="container">
+  <input type="date" [(ngModel)]="selectedDate" />
+  <span></span>
+  <div class="chart">
+    <app-perimetre-rentable></app-perimetre-rentable>
+  </div>
+  <div class="chart">
+    <app-perimetre-taxe></app-perimetre-taxe>
+  </div>
+  <div class="chart">
+    <app-perimetre-invst></app-perimetre-invst>
+  </div>
+</div>

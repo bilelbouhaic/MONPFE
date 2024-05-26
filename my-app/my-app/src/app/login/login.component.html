@@ -1,0 +1,23 @@
+<!-- <div class="content" role="main">
+    <h2>Register</h2>
+    <div>name: <input [(ngModel)]="registerDto.name" ></div>
+    <div>email: <input [(ngModel)]="registerDto.email" ></div>
+    <div>password: <input [(ngModel)]="registerDto.password" ></div>
+    <button (click)="register(registerDto)">Register</button>
+</div> -->
+<section>
+
+  <div class="content" role="main">
+    <img src="../../../assets/Pictures/sonatrach.png" alt="">
+  
+    Email 
+    <input [(ngModel)]="loginDto.email" />
+
+    Password<br />
+    <input [(ngModel)]="loginDto.password" />
+    <br>
+    Vous n'avez pas de compte, <a routerLink="./Subscribe">Inscrivez vous </a>
+    <br><br>
+    <button (click)="login(loginDto)">s'authentifier</button>
+  </div>
+</section>
