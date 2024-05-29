@@ -1,15 +1,19 @@
+section{
+    height: 110vh;
+
+}
 .chart{
     background-color: white;
     border-radius: 10px;
     text-align: center;
     padding: 20px;
    
-
+    border: solid 1px #DFE7EF;
 }
 .container{
     display: grid;
     grid-template-columns: 1fr 1fr;
-    width: 80%;
+    width: 90%;
     margin: auto;
     grid-gap: 30px;
 }
@@ -19,7 +23,7 @@
     border-radius: 10px;
     text-align: center;
     padding: 20px;
-    width: 80%;
+    width: 90%;
     margin: auto;
     margin-top: 30px;
     
@@ -32,4 +36,44 @@ input{
     padding: 10px;
     border-radius: 10px;
 
+}
+.kpi{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    width: 90%;
+    margin: auto;
+    margin-bottom:20px ;
+}
+.kpi div{
+    border: solid 1px #DFE7EF;
+background-color: white;
+width: 95%;
+
+height: 90px;
+text-align: center;
+align-items: center;
+border-radius: 10px;
+padding-top: 10px;
+
+}
+
+
+h1{
+    font-size: 25px;
+    font-weight: 600;
+    color: #4547A9;
+    
+}
+h2{
+    font-size: 16px;
+    font-weight: 400;
+    color: #8183F4;
+    
+}
+.filter{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 90%;
+    margin: auto;
+    margin-bottom: 20px;
 }

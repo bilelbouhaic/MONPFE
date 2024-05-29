@@ -3,7 +3,6 @@ import { ApplicationComponent } from './application/application.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ChartNbVenduComponent } from './MyCharts/MarcheCharts/chart-nb-vendu/chart-nb-vendu.component';
 import { ChartPrixExpComponent } from './MyCharts/MarcheCharts/chart-prix-exp/chart-prix-exp.component';
-import { PerimetreInvstComponent } from './MyCharts/FiscaliteCharts/perimetre-invst/perimetre-invst.component';
 import { PerimetreTaxeComponent } from './MyCharts/FiscaliteCharts/perimetre-taxe/perimetre-taxe.component';
 import { PerimetreRentableComponent } from './MyCharts/FiscaliteCharts/perimetre-rentable/perimetre-rentable.component';
 import { QteProduiteTemperatureComponent } from './MyCharts/ProductionCharts/qte-produite-temperature/qte-produite-temperature.component';
@@ -63,6 +62,7 @@ import { AnalyseMarcheMondialComponent } from './components/analyse-marche-mondi
 import { LoginComponent } from './login/login.component';
 import { AuthenticationInterceptor } from './Interceptor';
 import { SubscribtionComponent } from './components/subscribtion/subscribtion.component';
+import { TopcinqPerimComponent } from './topcinq-perim/topcinq-perim.component';
 
 
 @NgModule({
@@ -103,7 +103,7 @@ import { SubscribtionComponent } from './components/subscribtion/subscribtion.co
     QteProduiteTemperatureComponent,
     PerimetreRentableComponent,
     PerimetreTaxeComponent,
-    PerimetreInvstComponent,
+    
     AnalyseMarcheMondialComponent,
     ChartPrixExpComponent,
     ChartNbVenduComponent,
@@ -113,6 +113,7 @@ import { SubscribtionComponent } from './components/subscribtion/subscribtion.co
     ApplicationComponent,
     TrpComponent,
     SubscribtionComponent,
+    TopcinqPerimComponent,
 
     
 

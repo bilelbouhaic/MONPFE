@@ -1,60 +1,65 @@
-import { Component, AfterViewInit } from '@angular/core';
+// src/app/components/qte-produite-perimetre/qte-produite-perimetre.component.ts
+import { Component, OnInit } from '@angular/core';
 import { DataCubeService } from './qte-produite-perimetre.service';
-import { Chart, ChartOptions } from 'chart.js/auto';
+import { DateService } from '../../../components/statistique/date.service';
+
 
 @Component({
   selector: 'app-qte-produite-perimetre',
   templateUrl: './qte-produite-perimetre.component.html',
   styleUrls: ['./qte-produite-perimetre.component.css']
 })
-export class QteProduitePerimetreComponent implements AfterViewInit {
-  constructor(private dataCubeService: DataCubeService) {}
+export class QteProduitePerimetreComponent implements OnInit {
+  data: any;
+  options: any;
 
-  ngAfterViewInit() {
-    this.dataCubeService.getData().subscribe(
-      response => {
-        const labels = Object.keys(response);
-        const dataValues = Object.values(response);
+  constructor(private dataCubeService: DataCubeService, private dateService: DateService) {}
 
-        const data = {
-          labels: labels,
-          datasets: [
-            {
-              data: dataValues,
-              backgroundColor: ['#F4A261', '#264653', '#E9C46A', '#42A5F5'],
-              hoverBackgroundColor: ['#F4A261', '#264653', '#E9C46A', '#42A5F5']
-            }
-          ]
-        };
+  ngOnInit() {
+    this.dateService.selectedDate$.subscribe(date => {
+      this.dataCubeService.getData().subscribe(
+        response => {
+          const labels: string[] = [];
+          const dataValues: number[] = [];
 
-        const options: ChartOptions<'pie'> = {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: {
-              position: 'top',
-            },
-            tooltip: {
-              callbacks: {
-                label: (tooltipItem) => {
-                  const dataIndex = tooltipItem.dataIndex as number;
-                  return `${labels[dataIndex]}: ${tooltipItem.raw} USD`;
+          for (let i = 0; i < Math.min(response.length, 5); i++) {
+            labels.push(response[i].nom);
+            dataValues.push(response[i].valeur);
+          }
+
+          this.data = {
+            labels: labels,
+            datasets: [
+              {
+                data: dataValues,
+                backgroundColor: ['#8183F4', '#DADAFC', '#4547A9', '#FFD700', '#FFF3AD'],
+                hoverBackgroundColor: ['#8183F4', '#DADAFC', '#4547A9', '#FFD700', '#FFF3AD']
+              }
+            ]
+          };
+
+          this.options = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                position: 'bottom',
+              },
+              tooltip: {
+                callbacks: {
+                  label: (tooltipItem: { dataIndex: number; raw: any; }) => {
+                    const dataIndex = tooltipItem.dataIndex as number;
+                    return `${labels[dataIndex]}: ${tooltipItem.raw} Bbl`;
+                  }
                 }
               }
             }
-          }
-        };
-
-        const ctx = document.getElementById('myChart') as HTMLCanvasElement;
-        new Chart(ctx, {
-          type: 'pie',
-          data: data,
-          options: options
-        });
-      },
-      error => {
-        console.error('Error fetching data', error);
-      }
-    );
+          };
+        },
+        error => {
+          console.error('Error fetching data', error);
+        }
+      );
+    });
   }
 }

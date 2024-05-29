@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PerimetreInvstComponent } from './perimetre-invst.component';
+import { TopcinqPerimComponent } from './topcinq-perim.component';
 
-describe('PerimetreInvstComponent', () => {
-  let component: PerimetreInvstComponent;
-  let fixture: ComponentFixture<PerimetreInvstComponent>;
+describe('TopcinqPerimComponent', () => {
+  let component: TopcinqPerimComponent;
+  let fixture: ComponentFixture<TopcinqPerimComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [PerimetreInvstComponent]
+      declarations: [TopcinqPerimComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(PerimetreInvstComponent);
+    fixture = TestBed.createComponent(TopcinqPerimComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

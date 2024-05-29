@@ -13,12 +13,12 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace api.Controllers
 {
-    [Authorize(AuthenticationSchemes =JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiController]
     [Route("api/[controller]")]
     public class WilayaDateController : ControllerBase
     {
-    string connectionString = "Data Source=DESKTOP-5C3N6FQ\\SQLDEVANALYSIS;Catalog=ProjetMultidimensionnel2;Integrated Security=SSPI;";
+        string connectionString = "Data Source=DESKTOP-5C3N6FQ\\SQLDEVANALYSIS;Catalog=ProjetMultidimensionnel2;Integrated Security=SSPI;";
 
         [HttpGet]
         public IActionResult GetMdxResults()
@@ -48,25 +48,30 @@ namespace api.Controllers
                 }
             }
 
-            var results = DataTableToDictionary(dataTable);
+            var results = ExtractMeasureValues(dataTable);
             return Ok(results);
         }
 
-        private List<Dictionary<string, object>> DataTableToDictionary(DataTable table)
+        private List<double> ExtractMeasureValues(DataTable table)
         {
-            var result = new List<Dictionary<string, object>>();
+            var measureValues = new List<double>();
 
             foreach (DataRow row in table.Rows)
             {
-                var rowDict = new Dictionary<string, object>();
                 foreach (DataColumn column in table.Columns)
                 {
-                    rowDict[column.ColumnName] = row[column];
+                    // Vérifie si la colonne est la mesure "Quantite Produite Mois"
+                    if (column.ColumnName == "Quantite Produite Mois")
+                    {
+                        if (double.TryParse(row[column].ToString(), out double value))
+                        {
+                            measureValues.Add(value);
+                        }
+                    }
                 }
-                result.Add(rowDict);
             }
 
-            return result;
+            return measureValues;
         }
     }
 }

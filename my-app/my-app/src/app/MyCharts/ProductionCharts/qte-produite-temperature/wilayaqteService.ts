@@ -12,6 +12,11 @@ export class WilayaQTeService {
   private apiUrl3= 'http://localhost:5286/api/WilayaData/3';
   private apiUrl33 = 'http://localhost:5286/api/WilayaData/33';
 
+
+  private apiUrlMeteo = 'http://localhost:5286/api/Resultat/1';
+  private apiUrlMeteo3 = 'http://localhost:5286/api/Resultat/3';
+  private apiUrlMeteo33 = 'http://localhost:5286/api/Resultat/33';
+
   constructor(private http: HttpClient) { }
 
   getData1(): Observable<any> {
@@ -22,5 +27,15 @@ export class WilayaQTeService {
   }
   getData33(): Observable<any> {
     return this.http.get(this.apiUrl33);
+  }
+
+  getDataMeteoAdrar(): Observable<any> {
+    return this.http.get(this.apiUrlMeteo);
+  }
+  getDataMeteoLaghouat(): Observable<any> {
+    return this.http.get(this.apiUrlMeteo3);
+  }
+  getDataMeteoIllizi(): Observable<any> {
+    return this.http.get(this.apiUrlMeteo33);
   }
 }

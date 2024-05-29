@@ -1,5 +1,8 @@
+import { DateService } from '../../../components/statistique/date.service';
+import { DataCubeService } from './../../FiscaliteCharts/perimetre-taxe/perimetre-taxe.service';
 import { Component, OnInit } from '@angular/core';
-import { DataCubeService } from './qte-produite-produit.service';
+import { DataCubeService1 } from './qte-produite-produit.service';
+
 
 @Component({
   selector: 'app-qte-produite-produit',
@@ -10,40 +13,42 @@ export class QteProduiteProduitComponent implements OnInit {
   data: any;
   options: any;
 
-  constructor(private dataCubeService: DataCubeService) {}
+  constructor(private dataCubeService: DataCubeService1, private dateService:DateService ) {}
 
   ngOnInit() {
-    this.dataCubeService.getData().subscribe(
-      response => {
-        const labels = Object.keys(response);
-        const dataValues = Object.values(response);
+    // S'abonner aux changements de date
+    this.dateService.selectedDate$.subscribe(date => {
+      // Appeler le service pour obtenir les données en fonction de la nouvelle date
+      this.dataCubeService.getData().subscribe(
+        response => {
+          const labels = Object.keys(response);
+          const dataValues = Object.values(response);
 
-        this.data = {
-          labels: labels,
-          datasets: [
-            {
-              data: dataValues,
-              backgroundColor: ['#F4A261', '#264653', '#E9C46A', '#42A5F5'],
-              hoverBackgroundColor: ['#F4A261', '#264653', '#E9C46A', '#42A5F5']
-            }
-          ]
-        };
+          this.data = {
+            labels: labels,
+            datasets: [
+              {
+                data: dataValues,
+                backgroundColor: ['#8183F4', '#DADAFC', '#4547A9', '#FFD700','#FFF3AD '],
+                hoverBackgroundColor: ['#8183F4', '#DADAFC', '#4547A9', '#FFD700','#FFF3AD ']
+              }
+            ]
+          };
 
-        this.options = {
-          indexAxis: 'y',
-          scales: {
-            x: {
-              beginAtZero: true
-            }
-          }
-        };
-      },
-      error => {
-        console.error('Error fetching data', error);
-      }
-    );
-
-
-    
+          this.options = {
+            indexAxis: 'y',
+            scales: {
+              x: {
+                beginAtZero: true
+              }
+            },
+            
+          };
+        },
+        error => {
+          console.error('Error fetching data', error);
+        }
+      );
+    });
   }
 }

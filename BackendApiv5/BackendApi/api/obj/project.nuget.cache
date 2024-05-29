@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "h9nS8qo1hljH48iooSNIsCC5DUvaodtoHREPKfNjQYtobiZKDu7FUsoaLvoDIZA3Vwhzm4rYct3cz8NtatKxSA==",
+  "dgSpecHash": "2aajXmR4LFjt9aZ8vL32Ks7seF2nBMjTHJBvOOyXfPCPm2Z7gjINjuHXfIwOLMlgC2jg/BDp9OxmrAfY0jFMGg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\DELL\\OneDrive\\Bureau\\BackendApiv5\\BackendApi\\api\\api.csproj",
+  "projectFilePath": "C:\\Users\\DELL\\OneDrive\\Bureau\\MONPFE\\BackendApiv5\\BackendApi\\api\\api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\DELL\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\DELL\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",

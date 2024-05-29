@@ -52,7 +52,7 @@ namespace api.Controllers
                 return BadRequest("Invalid file path.");
             }
 
-            DateOnly initialDate = new DateOnly(2024, 6, 16); // Year, Month, Day
+            DateOnly initialDate = new DateOnly(2017, 12, 10); // Year, Month, Day
 
             var prixBPetrole = await _context.prixBases
                 .Where(pb => pb.Produit.nomProduit == "Petrole")

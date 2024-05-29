@@ -1,20 +1,20 @@
+// statistique.component.ts
 import { Component } from '@angular/core';
-import { CalendarModule } from 'primeng/calendar';
+import { DateService } from './date.service';
+
 @Component({
   selector: 'app-statistique',
   templateUrl: './statistique.component.html',
-  styleUrl: './statistique.component.css'
+  styleUrls: ['./statistique.component.css']
 })
 export class StatistiqueComponent {
   selectedDate: string;
-  
-  constructor() {
-    this.selectedDate = '';
-  }
-  onDateChange(event: any): void {
-    this.selectedDate = event.target.value;
+
+  constructor(private dateService: DateService) {
+    this.selectedDate = '2017-05-10'; // Initialize with the default date
   }
 
-  
-
+  onDateChange(date: string) {
+    this.dateService.updateDate(date);
+  }
 }

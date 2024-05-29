@@ -1,18 +1,23 @@
-// data-cube.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+import { DateService2 } from '../../../components/acceuil/date2.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataCubeService {
+  private apiUrl = 'http://localhost:5286/api/PerimetreTaxe';
 
-  private apiUrl = 'https://api.coingecko.com/api/v3/simple/price?ids=ripple,cardano,dogecoin,chainlink&vs_currencies=usd';
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private dateService: DateService2) { }
 
   getData(): Observable<any> {
-    return this.http.get(this.apiUrl);
+    return this.dateService.selectedDate$.pipe(
+      switchMap(date => {
+        const url = `${this.apiUrl}/${date}`;
+        return this.http.get(url);
+      })
+    );
   }
 }

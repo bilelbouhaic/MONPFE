@@ -1,18 +1,23 @@
-// data-cube.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+import { DateService } from '../../../components/statistique/date.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class DataCubeService {
+export class DataCubeService1 {
+  private apiUrl = 'http://localhost:5286/api/QantiteProduite';
 
-  private apiUrl = 'http://localhost:5286/api/QantiteProduite/2024-04-16';
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private dateService: DateService) { }
 
   getData(): Observable<any> {
-    return this.http.get(this.apiUrl);
+    return this.dateService.selectedDate$.pipe(
+      switchMap(date => {
+        const url = `${this.apiUrl}/${date}`;
+        return this.http.get(url);
+      })
+    );
   }
 }

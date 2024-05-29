@@ -1,6 +1,6 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { DataCubeService } from './perimetre-rentable.service';
-import { Chart, ChartOptions } from 'chart.js/auto';
+import { DateService2 } from '../../../components/acceuil/date2.service';
 
 @Component({
   selector: 'app-perimetre-rentable',
@@ -8,55 +8,62 @@ import { Chart, ChartOptions } from 'chart.js/auto';
   styleUrls: ['./perimetre-rentable.component.css']
 })
 export class PerimetreRentableComponent implements AfterViewInit {
-  constructor(private dataCubeService: DataCubeService) {}
+  chartData: any;
+  chartOptions: any;
+
+  constructor(private dataCubeService: DataCubeService, private dateService: DateService2) {}
 
   ngAfterViewInit() {
-    this.dataCubeService.getData().subscribe(
-      response => {
-        const labels = Object.keys(response);
-        const dataValues = labels.map(label => response[label].usd);
+    // S'abonner aux changements de date
+    this.dateService.selectedDate$.subscribe(date => {
+      // Appeler le service pour obtenir les données en fonction de la nouvelle date
+      this.dataCubeService.getData().subscribe(
+        response => {
+          console.log(response);
 
-        const data = {
-          labels: labels,
-          datasets: [
-            {
-              data: dataValues,
-              backgroundColor: ['#F4A261', '#264653', '#E9C46A', '#42A5F5'],
-              hoverBackgroundColor: ['#F4A261', '#264653', '#E9C46A', '#42A5F5']
-            }
-          ]
-        };
+          // Créer les vecteurs pour les noms et les valeurs
+          const labels: string[] = [];
+          const dataValues: number[] = [];
 
-        const options: ChartOptions<'polarArea'> = {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: {
-              position: 'top',
-            },
-            tooltip: {
-              callbacks: {
-                label: (tooltipItem) => {
-                  const dataIndex = tooltipItem.dataIndex as number;
-                  return `${labels[dataIndex]}: ${tooltipItem.raw} USD`;
+          // Remplir les vecteurs avec les valeurs de la réponse (jusqu'à 5 éléments)
+          for (let i = 0; i < Math.min(response.length, 5); i++) {
+            labels.push(response[i].nom);
+            dataValues.push(response[i].valeur);
+          }
+
+          this.chartData = {
+            labels: labels,
+            datasets: [
+              {
+                data: dataValues,
+                backgroundColor: ['#8183F4', '#DADAFC', '#4547A9', '#FFD700','#FFF3AD '],
+                hoverBackgroundColor: ['#8183F4', '#DADAFC', '#4547A9', '#FFD700','#FFF3AD ']
+              }
+            ]
+          };
+
+          this.chartOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                position: 'bottom',
+              },
+              tooltip: {
+                callbacks: {
+                  label: (tooltipItem: { dataIndex: number; raw: any; }) => {
+                    const dataIndex = tooltipItem.dataIndex as number;
+                    return `${labels[dataIndex]}: ${tooltipItem.raw} USD`;
+                  }
                 }
               }
             }
-          }
-        };
-
-        const ctx = document.getElementById('myChart') as HTMLCanvasElement;
-        if (ctx) {
-          new Chart(ctx, {
-            type: 'polarArea',
-            data: data,
-            options: options
-          });
+          };
+        },
+        error => {
+          console.error('Error fetching data', error);
         }
-      },
-      error => {
-        console.error('Error fetching data', error);
-      }
-    );
+      );
+    });
   }
 }

@@ -3,7 +3,7 @@
 <section>
   <!-- app.component.html -->
   <div class="container">
-    <input type="date" [(ngModel)]="selectedDate" />
+    <input type="date" [(ngModel)]="selectedDate" (ngModelChange)="onDateChange($event)" />
     <span></span>
 
     <div class="chart">

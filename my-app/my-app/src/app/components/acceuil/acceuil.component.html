@@ -1,16 +1,31 @@
+<section>
 <app-myheader [pageTitle]="'Analyse production'"></app-myheader>
 
 <!-- app.component.html -->
-<div class="container">
-  <input type="date" [(ngModel)]="selectedDate" />
+<div class="filter">
+  <input type="date" [(ngModel)]="selectedDate" (ngModelChange)="onDateChange($event)" />
   <span></span>
+</div>
+<div class="kpi">
+  <div>
+    <h1>{{kpi1}} </h1>
+    <h2>Somme des taxes mensuelle</h2>
+  </div>
+  <div>
+    <h1>{{kpi2}} %</h1>
+    <h2>Taux de taxe moyen</h2>
+  </div>
+  <div>
+    <h1>{{kpi3}}%</h1>
+    <h2>Ratio rentabilite</h2>
+  </div>
+</div>
+<div class="container">
   <div class="chart">
     <app-perimetre-rentable></app-perimetre-rentable>
   </div>
   <div class="chart">
     <app-perimetre-taxe></app-perimetre-taxe>
   </div>
-  <div class="chart">
-    <app-perimetre-invst></app-perimetre-invst>
-  </div>
 </div>
+</section>
