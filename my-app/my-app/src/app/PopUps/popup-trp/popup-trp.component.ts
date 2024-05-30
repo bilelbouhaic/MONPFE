@@ -28,10 +28,10 @@ export class PopupTrpComponent {
 
   calculateTrp() {
 
-    // if (!this.isDateValid()) {
-    //   alert('Délai dépassé. Impossible de calculer TRP.');
-    //   return;
-    // }
+    if (!this.isDateValid()) {
+      alert('Délai dépassé. Impossible de calculer TRP.');
+      return;
+    }
     const data = {
       tauxRdv: this.tauxTrp,
       dateRdv: this.currentDate,

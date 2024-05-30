@@ -8,7 +8,7 @@ using api.Data;
 
 #nullable disable
 
-namespace api.Migrations.ApiDb
+namespace api.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
     partial class ApiDbContextModelSnapshot : ModelSnapshot

@@ -11,10 +11,12 @@ import { DataUpdateComponent } from './components/data-update/data-update.compon
 import { DataMonthComponent } from './components/data-month/data-month.component';
 import { DataYearComponent } from './components/data-year/data-year.component';
 import { DataInvstComponent } from './components/data-invst/data-invst.component';
-import { authGuard } from './guards/auth.guard';
+import { AuthGuard } from './guards/auth.guard';
 import { AcceuilComponent } from './components/acceuil/acceuil.component';
 import { TrpComponent } from './trp/trp.component';
 import { SubscribtionComponent } from './components/subscribtion/subscribtion.component';
+import { RoleGuard } from './guards/autorisation.guard';
+import { AccesDeniedComponent } from './acces-denied/acces-denied.component';
 
 
 const routes: Routes = [
@@ -24,10 +26,10 @@ const routes: Routes = [
   {
     path: 'Application',
     component: ApplicationComponent,
-    canActivate:[authGuard],
+    canActivate:[AuthGuard],
     children: [
-      { path: 'Acceuil', component: AcceuilComponent },
-      { path: 'Statistique', component: StatistiqueComponent },
+      { path: 'Acceuil', component: AcceuilComponent ,canActivate: [RoleGuard],  data: { roles: ['Admin'] }  },
+      { path: 'Statistique', component: StatistiqueComponent, canActivate: [RoleGuard],  data: { roles: ['Admin'] }  },
       { path: 'Calcul', component: CalculComponent },
       { path: 'Update', component: DataUpdateComponent },
       { path: 'Month', component: DataMonthComponent },
@@ -36,7 +38,8 @@ const routes: Routes = [
       { path: 'Update', component: DataUpdateComponent },
       { path: 'Redevance', component: RedevanceComponent },
       { path: 'Trp', component: TrpComponent },
-      { path: 'Analyse', component: AnalyseMarcheMondialComponent },
+      { path: 'Analyse', component: AnalyseMarcheMondialComponent ,canActivate: [RoleGuard],  data: { roles: ['Admin'] } },
+      { path: 'Acces', component: AccesDeniedComponent  },
       
     
     ],

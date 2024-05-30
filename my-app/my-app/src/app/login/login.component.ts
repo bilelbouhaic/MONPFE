@@ -1,58 +1,33 @@
-import { Component,NgModule } from '@angular/core';
+// login.component.ts
+import { Component } from '@angular/core';
 import { Login } from '../login';
-import { Register } from '../register';
-import { JwtAuth } from '../jwtAuth';
-import { FormsModule } from '@angular/forms';
 import { AuthenticationService } from '../authentication.service';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
-  loginDto =new Login();
-  registerDto =new Register();
-  jwtDto = new JwtAuth();
+  loginDto = new Login();
+  errorMessage: string = '';
 
-  
-  constructor(private authService: AuthenticationService, private router: Router) {}
+  constructor(
+    private authService: AuthenticationService,
+    private router: Router
+  ) {}
 
-  register(registerDto: any): void {
-    this.authService.register(registerDto).subscribe(
-      response => {
-        // Handle registration success
-        console.log('Registration successful');
-      },
-      error => {
-        // Handle registration error
-        console.error('Registration failed');
-      }
-    );
-  }
-
-  login(loginDto: any): void {
-    this.authService.login(loginDto).subscribe(
-      response => {
-        // Store the JWT token in local storage
+  login(): void {
+    this.authService.login(this.loginDto).subscribe(
+      (response) => {
         localStorage.setItem('jwtToken', response.token);
-
-        // Navigate to /Application
         this.router.navigate(['/Application/Calcul']);
       },
-      error => {
-        // Handle login error
-        console.error('Login failed');
+      (error) => {
+        console.error('La connexion a échoué', error);
+        this.errorMessage = 'La connexion a échoué. Veuillez vérifier vos informations d\'identification.';
       }
     );
   }
-
-getWilaya(){
-  this.authService.getWilaya().subscribe((wilayadata:any)=>{
-    console.log(wilayadata);
-    
-  })
-}
-
 }

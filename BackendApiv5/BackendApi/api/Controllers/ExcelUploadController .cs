@@ -31,7 +31,7 @@ namespace api.Controllers
 
         // Second step: extract data from the uploaded Excel file
         [HttpPost("extract")]
-        public async Task<IActionResult> ExtractDataFromExcel(IFormFile file)
+        public async Task<IActionResult> ExtractDataFromExcel(IFormFile file, [FromForm] string initialDate, [FromForm] string typeRdv)
         {
             if (file == null || file.Length == 0)
             {
@@ -52,7 +52,11 @@ namespace api.Controllers
                 return BadRequest("Invalid file path.");
             }
 
-            DateOnly initialDate = new DateOnly(2017, 12, 10); // Year, Month, Day
+            DateOnly parsedDate;
+            if (!DateOnly.TryParse(initialDate, out parsedDate))
+            {
+                return BadRequest("Invalid date format for initialDate.");
+            }
 
             var prixBPetrole = await _context.prixBases
                 .Where(pb => pb.Produit.nomProduit == "Petrole")
@@ -87,8 +91,8 @@ namespace api.Controllers
                             ProductionValorise = expeditionEXP * prixBPetrole + expeditionMN * prixBPetrole, // Using prixBPetrole twice as prixMnPetrole is not available
                             qteProduite = quantiteProduite,
                             ProduitId = 1,
-                            typeRdv = "Definitive",
-                            dateRdv = initialDate,
+                            typeRdv = typeRdv,
+                            dateRdv = parsedDate,
                             perimetreId = i,
                             CoutTransport = prixTtPetrole * expeditionMN
                         };
@@ -97,80 +101,7 @@ namespace api.Controllers
                         newRedevances.Add(redevance);
                     }
 
-                    var worksheet1 = package.Workbook.Worksheets[1];
-                    //gaz
-                    for (int i = 2; i <= worksheet1.Dimension.End.Row; i++)
-                    {
-                        if (!decimal.TryParse(worksheet1.Cells[i, 1].Text, out var quantiteProduite)) { return BadRequest($"Invalid number format for quantiteProduite at row {i}."); }
-                        if (!decimal.TryParse(worksheet1.Cells[i, 2].Text, out var expeditionMN)) { return BadRequest($"Invalid number format for expeditionMN at row {i}."); }
-                        if (!decimal.TryParse(worksheet1.Cells[i, 3].Text, out var expeditionEXP)) { return BadRequest($"Invalid number format for expeditionEXP at row {i}."); }
-                        if (!decimal.TryParse(worksheet1.Cells[i, 4].Text, out var pallier)) { return BadRequest($"Invalid number format for pallier at row {i}."); }
-                        if (!DateTime.TryParse(worksheet1.Cells[i, 5].Text, out var dateProduction)) { return BadRequest($"Invalid date format for dateProduction at row {i}."); }
-
-                        var redevance = new Production
-                        {
-                            ProductionValorise = expeditionEXP * prixBPetrole + expeditionMN * prixBPetrole, // Using prixBPetrole twice as prixMnPetrole is not available
-                            qteProduite = quantiteProduite,
-                            ProduitId = 2,
-                            typeRdv = "Definitive",
-                            dateRdv = initialDate,
-                            perimetreId = i,
-                            CoutTransport = prixTtPetrole * expeditionMN
-                        };
-                        
-
-                        newRedevances.Add(redevance);
-                    }
-                  var worksheet2 = package.Workbook.Worksheets[2];
-                    //Condensat
-                    for (int i = 2; i <= worksheet2.Dimension.End.Row; i++)
-                    {
-                        if (!decimal.TryParse(worksheet2.Cells[i, 1].Text, out var quantiteProduite)) { return BadRequest($"Invalid number format for quantiteProduite at row {i}."); }
-                        if (!decimal.TryParse(worksheet2.Cells[i, 2].Text, out var expeditionMN)) { return BadRequest($"Invalid number format for expeditionMN at row {i}."); }
-                        if (!decimal.TryParse(worksheet2.Cells[i, 3].Text, out var expeditionEXP)) { return BadRequest($"Invalid number format for expeditionEXP at row {i}."); }
-                        if (!decimal.TryParse(worksheet2.Cells[i, 4].Text, out var pallier)) { return BadRequest($"Invalid number format for pallier at row {i}."); }
-                        if (!DateTime.TryParse(worksheet2.Cells[i, 5].Text, out var dateProduction)) { return BadRequest($"Invalid date format for dateProduction at row {i}."); }
-
-                        var redevance = new Production
-                        {
-                            ProductionValorise = expeditionEXP * prixBPetrole + expeditionMN * prixBPetrole, // Using prixBPetrole twice as prixMnPetrole is not available
-                            qteProduite = quantiteProduite,
-                            ProduitId = 3,
-                            typeRdv = "Definitive",
-                            dateRdv = initialDate,
-                            perimetreId = i,
-                            CoutTransport = prixTtPetrole * expeditionMN
-                        };
-                        
-
-                        newRedevances.Add(redevance);
-                    }
-                    var worksheet3 = package.Workbook.Worksheets[3];
-                    //Gpl
-                    for (int i = 2; i <= worksheet3.Dimension.End.Row; i++)
-                    {
-                        if (!decimal.TryParse(worksheet3.Cells[i, 1].Text, out var quantiteProduite)) { return BadRequest($"Invalid number format for quantiteProduite at row {i}."); }
-                        if (!decimal.TryParse(worksheet3.Cells[i, 2].Text, out var expeditionMN)) { return BadRequest($"Invalid number format for expeditionMN at row {i}."); }
-                        if (!decimal.TryParse(worksheet3.Cells[i, 3].Text, out var expeditionEXP)) { return BadRequest($"Invalid number format for expeditionEXP at row {i}."); }
-                        if (!decimal.TryParse(worksheet3.Cells[i, 4].Text, out var pallier)) { return BadRequest($"Invalid number format for pallier at row {i}."); }
-                        if (!DateTime.TryParse(worksheet3.Cells[i, 5].Text, out var dateProduction)) { return BadRequest($"Invalid date format for dateProduction at row {i}."); }
-
-                        var redevance = new Production
-                        {
-                            ProductionValorise = expeditionEXP * prixBPetrole + expeditionMN * prixBPetrole, // Using prixBPetrole twice as prixMnPetrole is not available
-                            qteProduite = quantiteProduite,
-                            ProduitId = 4,
-                            typeRdv = "Definitive",
-                            dateRdv = initialDate,
-                            perimetreId = i,
-                            CoutTransport = prixTtPetrole * expeditionMN
-                        };
-                        
-
-                        newRedevances.Add(redevance);
-                    }
-
-
+                    // Add similar logic for other worksheets
 
                 }
             }

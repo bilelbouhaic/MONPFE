@@ -63,6 +63,7 @@ import { LoginComponent } from './login/login.component';
 import { AuthenticationInterceptor } from './Interceptor';
 import { SubscribtionComponent } from './components/subscribtion/subscribtion.component';
 import { TopcinqPerimComponent } from './topcinq-perim/topcinq-perim.component';
+import { AccesDeniedComponent } from './acces-denied/acces-denied.component';
 
 
 @NgModule({
@@ -114,6 +115,7 @@ import { TopcinqPerimComponent } from './topcinq-perim/topcinq-perim.component';
     TrpComponent,
     SubscribtionComponent,
     TopcinqPerimComponent,
+    AccesDeniedComponent,
 
     
 

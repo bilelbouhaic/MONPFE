@@ -1,19 +1,27 @@
-import { Chart } from 'chart.js/auto';
 import { Component } from '@angular/core';
-import { faHome,faChartLine, faCalculator ,faChartSimple, faOilWell, faCircleDollarToSlot, faFileInvoiceDollar, faFileArrowDown} from '@fortawesome/free-solid-svg-icons';
+import { faHome, faChartLine, faCalculator, faChartSimple, faOilWell, faCircleDollarToSlot, faFileInvoiceDollar, faFileArrowDown } from '@fortawesome/free-solid-svg-icons';
+import { AuthenticationService } from '../../authentication.service';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
-  styleUrl: './sidebar.component.css'
+  styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent {
- home= faHome;
- stat =faChartLine;
- calcul=faCalculator;
- Chart=faChartSimple
- Oil=faOilWell
- dollar=faCircleDollarToSlot
- trp=faFileInvoiceDollar
- rdv=faFileArrowDown
+  home = faHome;
+  stat = faChartLine;
+  calcul = faCalculator;
+  chart = faChartSimple;
+  Oil = faOilWell;
+  dollar = faCircleDollarToSlot;
+  trp = faFileInvoiceDollar;
+  rdv = faFileArrowDown;
 
+  constructor(private authService: AuthenticationService, private router: Router) { }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/login']);
+  }
 }

@@ -58,6 +58,8 @@ export class CalculComponent {
     this.dataService.getData().subscribe(data => {
       // Supposons que les données renvoyées par l'API sont un tableau d'objets avec les propriétés subTitle, valeur et couleur
       this.lastUpdateData = data; // Assurez-vous que les données sont dans le format approprié pour chaque instance de app-last-update
+      console.log("Im here HHHH");
+      
       console.log(this.lastUpdateData);
       
     });

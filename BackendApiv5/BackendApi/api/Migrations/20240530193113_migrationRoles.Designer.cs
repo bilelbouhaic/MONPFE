@@ -9,11 +9,11 @@ using api.Data;
 
 #nullable disable
 
-namespace api.Migrations.ApiDb
+namespace api.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    [Migration("20240523104304_AUTH-MIGRATION")]
-    partial class AUTHMIGRATION
+    [Migration("20240530193113_migrationRoles")]
+    partial class migrationRoles
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

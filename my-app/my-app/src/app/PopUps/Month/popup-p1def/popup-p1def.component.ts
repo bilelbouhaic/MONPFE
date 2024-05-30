@@ -19,7 +19,7 @@ export class PopupP1defComponent {
 
   constructor(private apiService: ApiService) {
     const date = new Date();
-    const month = date.getMonth() ; // Récupère le mois -2
+    const month = date.getMonth()-1 ; // Récupère le mois -2
     const year = date.getFullYear(); // Récupère l'année actuelle
     this.currentDate = `${month.toString().padStart(2, '0')}/${year.toString()}`;
   }
